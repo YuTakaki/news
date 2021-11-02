@@ -2,19 +2,23 @@ package com.example.news
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.news.activity.ArticleActivity
 import com.squareup.picasso.Picasso
+import java.io.Serializable
 
+interface SeeNews {
+    fun seeNews(article : Article)
+}
 class RecyclerViewHolder (
-    val context : Context,
-    val newsList: NewsList
+    val seeNews: SeeNews,
+    private val newsList: NewsList
     ): RecyclerView.Adapter<RecyclerViewHolder.NewsViewHolder>() {
 
     class NewsViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView)
@@ -29,14 +33,20 @@ class RecyclerViewHolder (
         holder.itemView.apply{
             val title = this.findViewById<TextView>(R.id.header_title)
             val img = this.findViewById<ImageView>(R.id.headlineImg)
+            val date = this.findViewById<TextView>(R.id.header_date)
+            date.text = news.description
             title.text = news.title.toString()
             if (news.urlToImage != null) {
                 Picasso.get().load(news.urlToImage).into(img)
             }
+        }
+        holder.itemView.setOnClickListener{
+            seeNews.seeNews(news)
         }
     }
 
     override fun getItemCount(): Int {
         return newsList.articles.size
     }
+
 }
