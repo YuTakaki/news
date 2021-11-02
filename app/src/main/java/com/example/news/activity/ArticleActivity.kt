@@ -15,7 +15,7 @@ class ArticleActivity : AppCompatActivity() {
         val articleImg = findViewById<ImageView>(R.id.iv_articleDetailImg)
         val articleContent = findViewById<TextView>(R.id.tv_articleContent)
         val article = intent.getSerializableExtra("article")!! as Article;
-        articleContent.text = article.content.toString()
+        articleContent.text = article.content
 
     }
 

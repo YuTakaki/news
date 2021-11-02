@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.news.*
@@ -19,15 +23,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MainFragment : Fragment(), SeeNews, SetCategory {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    lateinit var views : View
+
+    private lateinit var views : View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         views = inflater.inflate(R.layout.fragment_main, container, false)
+
+        return views
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val categories  = listOf<String>(
             "business",
             "entertainment",
@@ -42,8 +50,9 @@ class MainFragment : Fragment(), SeeNews, SetCategory {
         rvCategory.adapter = categoryAdapter
         rvCategory.layoutManager = LinearLayoutManager(views.context, LinearLayoutManager.HORIZONTAL, false)
         getData("business")
-        return views
     }
+
+
 
     private fun getData(category : String){
         val retrofitBuilder = Retrofit.Builder()
@@ -62,7 +71,7 @@ class MainFragment : Fragment(), SeeNews, SetCategory {
             }
 
             override fun onFailure(call: Call<NewsList?>, t: Throwable) {
-                TODO("Not yet implemented")
+
             }
         })
     }
@@ -75,11 +84,14 @@ class MainFragment : Fragment(), SeeNews, SetCategory {
     }
 
     override fun seeNews(news: Article) {
-        Log.d("asasd", news.title)
-        Intent(views.context, ArticleActivity::class.java).also{
-            it.putExtra("article", news)
-            startActivity(it)
-        }
+//        Intent(views.context, ArticleActivity::class.java).also{
+//            it.putExtra("article", news)
+//            startActivity(it)
+//        }
+        Log.d("ddd", "wfwfwefwefe")
+
+        Navigation.findNavController(views).navigate(R.id.action_mainFragment_to_articleFragment)
+
     }
 
     override fun setCategory(category: String) {

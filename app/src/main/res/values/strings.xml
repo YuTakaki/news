@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">News</string>
     <string name="api">62b1468c8a1f4c7bbf0b6130386bbcb5</string>
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_settings">settings</string>
 </resources>

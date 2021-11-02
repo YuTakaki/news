@@ -5,6 +5,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.news.*
@@ -18,9 +24,22 @@ import java.io.Serializable
 
 class MainActivity : AppCompatActivity(){
 //    private val context : Context = this
+
+    private lateinit var appBarConfiguration: AppBarConfiguration
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        var view = R.layout.activity_main
+        setContentView(view)
+
+        val navController = findNavController(R.id.hostFragment)
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+
+
+//        val navController = this.findNavController(R.id.hostFragment)
+//        val appBarConfiguration = AppBarConfiguration(navController.graph)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
 //        val categories  = listOf<String>(
 //            "business",
 //            "entertainment",
@@ -36,6 +55,12 @@ class MainActivity : AppCompatActivity(){
 //        rvCategory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 //        getData("business")
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController =  findNavController(R.id.hostFragment)
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
 //    private fun getData(category : String){
 //        val retrofitBuilder = Retrofit.Builder()
 //            .addConverterFactory(GsonConverterFactory.create())
@@ -77,4 +102,5 @@ class MainActivity : AppCompatActivity(){
 //        getData(category)
 //    }
 }
+
 
